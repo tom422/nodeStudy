@@ -14,6 +14,18 @@ app.post('/user', (req, res) => {
     res.send('请求成功')
 })
 
+app.get('/', (req, res) => {
+    // 通过 req.query 可以获取到客户端发过来的 查询参数
+    // 注意： 默认情况下， req.query 是一个空对象
+    console.log(req.query);
+    res.send(req.query)
+})
+
+// 注意： 这里的 ：id 是一个动态参数
+app.get('/user/:ids/:name', (req, res) => {
+    console.log(req.params);
+    res.send(req.params)
+})
 
 // 3. 启动 web 服务器
 app.listen(8080, () => {
