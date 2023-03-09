@@ -2,9 +2,10 @@
   "name": "day3",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "08.使用express.static对外提供静态资源.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "nodemon 08.使用express.static对外提供静态资源.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "moment": "^2.29.4"
   },
   "devDependencies": {
+    "nodemon": "^2.0.21",
     "webpack": "^5.76.0"
   }
 }
