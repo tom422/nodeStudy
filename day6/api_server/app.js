@@ -24,10 +24,20 @@ app.use((req, res, next) => {
   next()
 })
 
-// write your code here...
+// 一定要在路由之前配置解析 TOken 的中间件
+const expressJWT = require('express-jwt')
+const config = require('./config')
+
+app.use(expressJWT({secret: config.jwtSecretKey}).unless({path:[/^\/api/]}))
+
 // 导入并注册用户路由模块
 const userRouter = require('./router/user')
 app.use('/api', userRouter)
+
+// 导入并使用用户信息路由模块
+const userinfoRouter = require('./router/userinfo')
+// 注意：以 /my 开头的接口，都是有权限的接口，需要进行 Token 身份认证
+app.use('/my', userinfoRouter)
 
 const joi = require('joi')
 // 定义错误级别的中间件
@@ -35,7 +45,8 @@ app.use((err,req,res,next)=>{
 
   // 验证失败导致的错误
     if (err instanceof joi.ValidationError) return res.cc(err)
-
+    // 捕获身份认证失败的错误
+    if (err.name === 'UnauthorizedError') return res.cc('身份认证失败！')
     // 未知的错误
     res.cc(err)
      
